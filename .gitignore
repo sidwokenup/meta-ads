@@ -1,0 +1,13 @@
+__pycache__/
+.pytest_cache/
+.env
+.venv/
+.vscode/
+.idea/
+*.log
+debug_all/
+debug_responses/
+frontend/node_modules/
+frontend/.next/
+frontend2/
+.trae/
