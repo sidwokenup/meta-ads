@@ -286,9 +286,9 @@ class GraphClient:
         status should be one of: ACTIVE, PAUSED, DELETED, ARCHIVED
         """
         logger.info(f"[GraphClient] update_campaign_status: {campaign_id} -> {status}")
-        url = f"{_GRAPH_BASE}/{campaign_id}?access_token={session.access_token}"
-        # We need to send form data for the status update
-        body = f"status={status}"
+        # Add access token in body instead of URL for POST requests
+        url = f"{_GRAPH_BASE}/{campaign_id}"
+        body = f"status={status}&access_token={session.access_token}"
         
         data = await self._browser_fetch(session, url, method="POST", body=body)
         logger.info(f"[GraphClient] update_campaign_status: success")
