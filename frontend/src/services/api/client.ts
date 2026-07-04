@@ -243,6 +243,7 @@ export const updateCampaignStatus = async (profileId: string, accountId: string,
     const baseUrl = resolveApiUrl(profileId);
     const res = await fetch(`${baseUrl}/campaign/${campaignId}/status`, {
       method: "POST",
+      cache: "no-store",
       headers: {
         "Content-Type": "application/json",
         "X-AdsPower-Profile-Id": profileId,
