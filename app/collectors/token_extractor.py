@@ -140,10 +140,12 @@ async def _get_cookies_via_cdp(cdp: CDPClient) -> dict[str, str]:
     )
 
     if "c_user" not in cookies or "xs" not in cookies:
-        from app.services.session_manager import SessionExpiredError
-        raise SessionExpiredError(
-            "Missing critical Facebook session cookies (c_user, xs). "
-            "The browser may not be logged in to Facebook."
+        # Fallback: Sometimes Facebook rotates cookies or we are looking at the wrong domain
+        # Let's try to fetch the page anyway, and rely on the HTTP redirect logic below
+        # to catch actual logouts, instead of failing early on cookie keys.
+        logger.warning(
+            "Missing 'c_user' or 'xs' cookies. The browser might be logged out, "
+            "or cookies might be on a different subdomain. Attempting to fetch anyway..."
         )
 
     return cookies
