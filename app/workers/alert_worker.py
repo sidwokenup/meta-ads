@@ -76,7 +76,8 @@ async def poll_account(profile_id: str, account_id: str) -> None:
 async def alert_worker_loop() -> None:
     """Background task loop that periodically polls accounts."""
     if not settings.BOT_TOKEN or not settings.TELEGRAM_CHAT_ID:
-        logger.warning("[AlertWorker] Bot token or Chat ID not configured. Worker will not send messages.")
+        logger.warning("[AlertWorker] Bot token or Chat ID not configured. Worker will not send messages. Worker disabled.")
+        return # Disable the worker entirely if no chat ID is configured to prevent unwanted polling
 
     logger.info(f"[AlertWorker] Started. Polling every {settings.ALERT_POLL_INTERVAL_SECONDS} seconds.")
     
