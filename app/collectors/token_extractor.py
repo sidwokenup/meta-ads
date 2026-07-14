@@ -140,7 +140,8 @@ async def _get_cookies_via_cdp(cdp: CDPClient) -> dict[str, str]:
     )
 
     if "c_user" not in cookies or "xs" not in cookies:
-        raise TokenExtractionError(
+        from app.services.session_manager import SessionExpiredError
+        raise SessionExpiredError(
             "Missing critical Facebook session cookies (c_user, xs). "
             "The browser may not be logged in to Facebook."
         )
